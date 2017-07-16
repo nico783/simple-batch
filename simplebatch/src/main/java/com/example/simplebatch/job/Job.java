@@ -14,9 +14,6 @@ import com.example.simplebatch.writer.service.WriterService;
 @Component
 public class Job {
 	
-	@Value(value = "${batch.size}")
-	private String batchSize;
-
 	@Autowired
 	private ReaderService readerService;
 
@@ -25,11 +22,8 @@ public class Job {
 
 	@Transactional
 	public void execute() {
-		// Obtenir l'ensemble des données à traiter
 		Stream<ReadEntity> readEntities = readerService.findAllEntities();
-		
 		writerService.write(readEntities);
-		
 	}
 
 }

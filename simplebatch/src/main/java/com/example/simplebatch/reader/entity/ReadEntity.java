@@ -5,16 +5,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Actor")
+@Table(name = "Personne")
 public class ReadEntity {
 
 	@Id
 	private Long id;
 
-	private String name;
+	private String nom;
 
-	private String version;
+	private String prenom;
+	
+	private String champ1;
 
+	private String champ2;
+	
+	private String champ3;
+	
 	public Long getId() {
 		return id;
 	}
@@ -23,20 +29,44 @@ public class ReadEntity {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNom() {
+		return nom;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
-	public String getVersion() {
-		return version;
+	public String getPrenom() {
+		return prenom;
 	}
 
-	public void setVersion(String version) {
-		this.version = version;
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public String getChamp1() {
+		return champ1;
+	}
+
+	public void setChamp1(String champ1) {
+		this.champ1 = champ1;
+	}
+
+	public String getChamp2() {
+		return champ2;
+	}
+
+	public void setChamp2(String champ2) {
+		this.champ2 = champ2;
+	}
+
+	public String getChamp3() {
+		return champ3;
+	}
+
+	public void setChamp3(String champ3) {
+		this.champ3 = champ3;
 	}
 
 	@Override
@@ -66,7 +96,8 @@ public class ReadEntity {
 
 	@Override
 	public String toString() {
-		return "ReadEntity [id=" + id + ", name=" + name + ", version=" + version + "]";
+		return "ReadEntity [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", champ1=" + champ1 + ", champ2="
+				+ champ2 + ", champ3=" + champ3 + "]";
 	}
-
+	
 }

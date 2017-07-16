@@ -7,8 +7,6 @@ spring:
     username: root
     password: 
     driverClassName: com.mysql.jdbc.Driver
-    test-on-borrow: true
-    test-while-idle: true
     validation-query: select 1;
     maxActive: 1
   jpa:
@@ -16,10 +14,8 @@ spring:
     generate-ddl: false
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-        ddl-auto: validate
-        hbm2ddl:
-          import_files:
+        dialect: org.hibernate.dialect.MySQLDialect
+        ddl-auto: none
 
 reader:
   datasource:
@@ -27,10 +23,8 @@ reader:
     username: root
     password: 
     driverClassName: com.mysql.jdbc.Driver
-    test-on-borrow: true
-    test-while-idle: true
     validation-query: select 1;
     maxActive: 1
     
 batch:
-  size: 40
+  size: 1000

@@ -1,12 +1,9 @@
 package com.example.simplebatch.writer.service;
 
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,18 +13,35 @@ import com.example.simplebatch.writer.repository.WriterRepository;
 
 @Service
 public class WriterService {
-
-	@PersistenceContext
-	EntityManager entityManager;
+	
+	@Value(value = "${batch.size}")
+	private String stringBatchSize;
 
 	@Autowired
-	private WriterRepository WriterRepository;
+	private WriterRepository writerRepository;
+	
+	private long compteur = 0;
 
 	@Transactional
 	public void write(Stream<ReadEntity> readEntities) {
-		readEntities.map(x -> process(x)).forEach(writeAndClear());
+		int batchSize = Integer.parseInt(stringBatchSize);
+		readEntities.map(x -> process(x)).forEach(t -> writeAndClear(t, batchSize));
 	}
+	
+	private synchronized void writeAndClear(WriteEntity entity, int batchSize) {
+		// WriteEntity persistentEntity =
+		writerRepository.save(entity);
+		compteur++;
+		
+		if (compteur % batchSize == 0) {
+			writerRepository.flushAndClear();
+			System.out.println("Nombre de lignes insérées : " + compteur);
+		}
 
+		// System.out.println(writerRepository.contains(persistentEntity));
+		// System.out.println(writerRepository.contains(entity));
+	}
+	
 	/**
 	 * Applique un traitement sur les données lues.
 	 * 
@@ -36,15 +50,10 @@ public class WriterService {
 	 */
 	private WriteEntity process(ReadEntity x) {
 		WriteEntity writeEntity = new WriteEntity();
-		writeEntity.setFirstName(x.getName());
+		writeEntity.setFirstName(x.getPrenom());
 		writeEntity.setId(x.getId());
-		writeEntity.setLastName("nico");
+		writeEntity.setLastName(x.getNom());
 		return writeEntity;
-	}
-
-	private Consumer<WriteEntity> writeAndClear() {
-		// entityManager.clear();
-		return t -> WriterRepository.saveAndFlush(t);
 	}
 
 }
