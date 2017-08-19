@@ -16,19 +16,16 @@ public class WriterService {
     @Autowired
     private WriterRepository writerRepository;
 
-    private long compteur = 0;
-
+    /**
+     * Ecrit l'ensemble des données passées en paramètre en base de données.
+     * @param entities
+     */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public synchronized void write(List<WriteEntity> entities, int batchSize) {
+    public void write(List<WriteEntity> entities) {
         for (WriteEntity entity : entities) {
             // Enregistrement seulement si le client n'existe pas déjà.
             if (!writerRepository.existsByCustomerKey(entity.getCustomerKey())) {
                 writerRepository.save(entity);
-                compteur++;
-
-                if (compteur % batchSize == 0) {
-                    writerRepository.flushAndClear();
-                }
             }
         }
     }

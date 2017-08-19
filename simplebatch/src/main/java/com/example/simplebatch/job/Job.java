@@ -30,15 +30,19 @@ public class Job {
     @Autowired
     private WriterService writerService;
 
-    @Transactional
+    /**
+     * Lit l'ensemble des données de type ReadEntity par page de "batchSize" éléments.
+     * Transforme ces données en type WriteEntity.
+     * Ecrit dans la base de données.
+     * Recommence tant qu'il y a des données non traitées.
+     */
     public void execute() {
         int batchSize = Integer.parseInt(stringBatchSize);
-
         boolean isFinish = false;
         int page = 0;
         while (!isFinish) {
-            Page<ReadEntity> readEntities = readerService.findAllEntities(page, 10);
-            writerService.write(process(readEntities), batchSize);
+            Slice<ReadEntity> readEntities = readerService.findAllEntities(page, batchSize);
+            writerService.write(process(readEntities));
             isFinish = readEntities.isLast();
             ++page;
         }
@@ -48,9 +52,9 @@ public class Job {
      * Applique un traitement sur les données lues.
      *
      * @param readEntities entités lues.
-     * @return Entité à écrire
+     * @return Entités à écrire
      */
-    private List<WriteEntity> process(Page<ReadEntity> readEntities) {
+    private List<WriteEntity> process(Slice<ReadEntity> readEntities) {
         List<WriteEntity> results = new ArrayList<>();
 
         for (ReadEntity readEntity : readEntities) {

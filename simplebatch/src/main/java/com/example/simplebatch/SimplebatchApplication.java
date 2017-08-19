@@ -20,14 +20,11 @@ public class SimplebatchApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(Job job) {
 		return args -> {
-			
-			// TODO: Vérifier si un autre batch est en train de s'executer ou non
 			System.out.println("Démarrage du batch");
 			long startTime = System.currentTimeMillis();
 			job.execute();
 			long endTime = System.currentTimeMillis();
 			System.out.println("Durée du traitement: " + (endTime-startTime)/1000 + " secondes.");
-			
 			System.out.println("Fin du traitement.");
 		};
 	}
