@@ -1,11 +1,10 @@
 package com.example.simplebatch.writer.repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
+import com.example.simplebatch.writer.entity.WriteEntity;
 import org.springframework.stereotype.Repository;
 
-import com.example.simplebatch.writer.entity.WriteEntity;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Repository
 public class WriterRepositoryImpl implements RepositoryCustom<WriteEntity, Long>{
