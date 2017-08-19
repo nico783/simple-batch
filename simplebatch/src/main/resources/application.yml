@@ -3,28 +3,28 @@ logging:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/test
-    username: root
-    password: 
+    url: jdbc:mysql://10.151.0.20:3306/base_client
+    username: nbenizri
+    password: Azerty22
     driverClassName: com.mysql.jdbc.Driver
     validation-query: select 1;
-    maxActive: 1
+    maxWait: 10000
   jpa:
     show-sql: false
     generate-ddl: false
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         ddl-auto: none
 
 reader:
   datasource:
-    url: jdbc:mysql://localhost:3306/testnbi
-    username: root
-    password: 
+    url: jdbc:mysql://mysql-rw.mysql-disi.nordnet.fr:3306/facturation_justif
+    username: visu_billing
+    password: password4visu
     driverClassName: com.mysql.jdbc.Driver
     validation-query: select 1;
-    maxActive: 1
+    maxWait: 10000
     
 batch:
-  size: 1000
+  size: 5

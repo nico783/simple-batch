@@ -24,4 +24,6 @@ public class WriterRepositoryImpl implements RepositoryCustom<WriteEntity, Long>
 		return entityManager.contains(entity);
 	}
 
+
+
 }

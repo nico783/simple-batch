@@ -6,4 +6,6 @@ import com.example.simplebatch.writer.entity.WriteEntity;
 
 public interface WriterRepository extends JpaRepository<WriteEntity, Long>, RepositoryCustom<WriteEntity, Long>{
 
+    boolean existsByCustomerKey(String customerKey);
+
 }

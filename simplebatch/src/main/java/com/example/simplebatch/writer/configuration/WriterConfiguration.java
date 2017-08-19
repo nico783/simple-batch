@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 		basePackages = {"com.example.simplebatch.writer.repository" })
 public class WriterConfiguration {
 
-
 	@Primary
 	@Bean(name = "dataSource")
 	@ConfigurationProperties(prefix="spring.datasource")
